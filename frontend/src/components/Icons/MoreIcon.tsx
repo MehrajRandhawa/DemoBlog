@@ -1,5 +1,6 @@
 import { Property } from "csstype";
 import React from "react";
+import colors from "../../utils/colors/colors";
 
 interface IconProps {
   size?: Property.Height;
@@ -10,7 +11,6 @@ interface IconProps {
 const MoreIcon: React.FunctionComponent<IconProps> = ({
   size,
   fill,
-  title,
   ...rest
 }) => {
   return (
@@ -22,8 +22,8 @@ const MoreIcon: React.FunctionComponent<IconProps> = ({
       y="0px"
       viewBox="0 0 384 384"
       enable-background="new 0 0 384 384"
+      {...rest}
     >
-      {title && <title>{title}</title>}
       <g>
         <g>
           <circle cx="192" cy="42.667" r="42.667" fill={fill} />
@@ -45,7 +45,7 @@ const MoreIcon: React.FunctionComponent<IconProps> = ({
 
 MoreIcon.defaultProps = {
   size: "12",
-  fill: "#010002",
+  fill: colors.monochrome.WHITE,
 };
 
 export default MoreIcon;

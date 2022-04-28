@@ -1,10 +1,11 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
+import { isDefined } from "../../utils/utils";
 
 interface ButtonProps {
   onPressHandler?(): void;
   icon?: React.ReactNode;
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const Button: FunctionComponent<ButtonProps> = ({
@@ -15,8 +16,8 @@ const Button: FunctionComponent<ButtonProps> = ({
 }) => {
   return (
     <ButtonContainer onClick={onPressHandler} {...rest}>
-      {icon && <ButtonIconContainer>{icon}</ButtonIconContainer>}
-      {children && <ButtonContentContainer>{children}</ButtonContentContainer>}
+      {isDefined(icon) && <ButtonIconContainer>{icon}</ButtonIconContainer>}
+      {isDefined(children) && <ButtonContentContainer>{children}</ButtonContentContainer>}
     </ButtonContainer>
   );
 };
@@ -28,6 +29,10 @@ const ButtonContainer = styled.button`
   background-color: #fff;
   align-items: center;
   align-content: space-between;
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 const ButtonIconContainer = styled.span`
@@ -37,6 +42,11 @@ const ButtonIconContainer = styled.span`
 `;
 
 const ButtonContentContainer = styled.div`
-  text-align: center;
   font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  width: 100%;
 `;

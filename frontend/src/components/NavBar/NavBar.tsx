@@ -4,7 +4,7 @@ import colors from "../../utils/colors/colors";
 import { useMemo } from "react";
 import { NonEmptyArray, NonEmptyTuple } from "../../utils/types/types";
 import { isDefined } from "../../utils/utils";
-import AuthenticationButtons from "../AuthenticationButtons/AuthenticationButtons";
+import AuthenticationMenu from "../AuthenticationMenu/AuthenticationMenu";
 
 type LinkPath = string;
 type LinkDescription = string;
@@ -35,9 +35,9 @@ const NavBar: React.FunctionComponent<NavBarProps> = ({
         </NavLogoContainer>
       )}
       <NavBarMenu>{NavLinkElements}</NavBarMenu>
-      <ButtonContainer>
-        <AuthenticationButtons/>
-      </ButtonContainer>
+      <AuthenticationMenuContainer>
+        <AuthenticationMenu isAuthenticated={false}/>
+      </AuthenticationMenuContainer>
     </NavBarContainer>
   );
 };
@@ -79,9 +79,9 @@ const NavLogoContainer = styled.div`
   margin: 5px;
 `;
 
-const ButtonContainer = styled.div`
+const AuthenticationMenuContainer = styled.div`
   display: flex;
-  border: solid;
+  width: 30%;
 `;
 
 export default NavBar;

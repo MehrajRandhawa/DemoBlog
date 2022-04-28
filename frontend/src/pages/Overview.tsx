@@ -1,9 +1,7 @@
-
-
+import Button from "../components/Button/Button";
 
 const Overview = () => {
-    return <div>Overview</div>
-
-}
+  return <button>Overview</button>;
+};
 
 export default Overview;

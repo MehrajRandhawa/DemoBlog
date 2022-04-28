@@ -1,5 +1,6 @@
 import { Property } from "csstype";
 import React from "react";
+import colors from "../../utils/colors/colors";
 // import colors from "../../../utils/colors/colors";
 
 interface IconProps {
@@ -26,6 +27,7 @@ const LogoIcon: React.FunctionComponent<IconProps> = ({
       viewBox="0 0 128 128"
       enable-background="new 0 0 128 128"
       xmlSpace="preserve"
+      {...rest}
     >
       <g>
         <g>
@@ -231,5 +233,5 @@ export default LogoIcon;
 LogoIcon.defaultProps = {
   height: "128",
   width: "128",
-  fill: "#FFFFFF"
+  fill: colors.monochrome.WHITE,
 };
