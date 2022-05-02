@@ -7,19 +7,20 @@ import LogoIcon from "../Icons/LogoIcon";
 
 function App() {
   return (
-    <React.Fragment>
-      <Router>
-        <header>
-          <NavBar links={NavBarLinks} icon={<LogoIcon height="64" width="64"/>}/>
-        </header>
-        <body>
-          <Routes>
-            <Route path="/" element={<Overview />}></Route>
-            <Route path="/overview" element={<Overview />}></Route>
-          </Routes>
-        </body>
-      </Router>
-    </React.Fragment>
+    <Router>
+      <header>
+        <NavBar
+          links={NavBarLinks}
+          icon={<LogoIcon height="64" width="64" />}
+        />
+      </header>
+      <body>
+        <Routes>
+          <Route path="/" element={<Overview />}></Route>
+          <Route path="/overview" element={<Overview />}></Route>
+        </Routes>
+      </body>
+    </Router>
   );
 }
 

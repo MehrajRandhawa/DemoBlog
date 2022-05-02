@@ -24,7 +24,7 @@ const LoginButton = styled(Button)`
   width: 90%;
   height: 70%;
   background-color: ${colors.primary.GRAY_2};
-  color: ${colors.monochrome.WHITE}
+  color: ${colors.monochrome.WHITE};
 `;
 
 const SWrapper = styled.div`
@@ -70,17 +70,17 @@ const UserDropdown = () => {
   });
 
   return (
-    <DropdownContainer onClick={toggle} ref={ref}>
-      <DropdownMain>
+    <UserDropdownContainer onClick={toggle} ref={ref}>
+      <DropdownMainElement>
         <SUserIcon />
-        <DropdownMainLabel>UserName</DropdownMainLabel>
-      </DropdownMain>
+        <UsernameLabel>UserName</UsernameLabel>
+      </DropdownMainElement>
       {isVisible && <LogOutButton>Log Out</LogOutButton>}
-    </DropdownContainer>
+    </UserDropdownContainer>
   );
 };
 
-const DropdownContainer = styled.div`
+const UserDropdownContainer = styled.div`
   display: block;
   height: 90%;
   width: 200px;
@@ -88,7 +88,7 @@ const DropdownContainer = styled.div`
   cursor: pointer;
 `;
 
-const DropdownMain = styled.div`
+const DropdownMainElement = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -100,7 +100,7 @@ const SUserIcon = styled(UserIcon)`
   margin: 10px;
 `;
 
-const DropdownMainLabel = styled.span`
+const UsernameLabel = styled.span`
   display: flex;
 
   align-items: center;

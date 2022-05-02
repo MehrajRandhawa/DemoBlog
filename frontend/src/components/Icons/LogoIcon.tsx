@@ -25,7 +25,6 @@ const LogoIcon: React.FunctionComponent<IconProps> = ({
       width={width}
       height={height}
       viewBox="0 0 128 128"
-      enable-background="new 0 0 128 128"
       xmlSpace="preserve"
       {...rest}
     >

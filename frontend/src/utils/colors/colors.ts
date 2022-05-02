@@ -5,10 +5,13 @@ export namespace colors {
     export const BLUE_1 = "#6689DC";
     export const BLUE_2 = "#3356A9";
     export const BLUE_3 = "#002376";
+    export const BLUE_4 = "#000E31";
+    export const BLUE_5 = "#01061b";
 
     export const GRAY_1 = "#A1A5AB";
     export const GRAY_2 = "#55595F";
     export const GRAY_3 = "#22262C";
+    export const GRAY_4 = "#4c525a";
 
     export const GREEN_1 = "#ECFFEE";
     export const GREEN_2 = "#B9FFBB";
@@ -48,4 +51,15 @@ export const getRGB = (color: Property.Color): RGB => {
   }
 
   return rgb;
+};
+
+export const getRandomColor = () => {
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    const random = Math.random();
+    const bit = (random * 16) | 0;
+    color += bit.toString(16);
+  }
+
+  return color;
 };
