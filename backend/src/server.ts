@@ -2,6 +2,7 @@ import { ApolloServer } from 'apollo-server-express'
 import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import express from 'express'
 import http from 'http'
+import typeDefs from './schema/schema'
 
 async function listen(port: number) {
   const app = express()
