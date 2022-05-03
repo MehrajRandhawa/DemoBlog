@@ -16,24 +16,15 @@ model Article {
   textBody         String
   createdDate      DateTime  @default(value: now())
   lastModifiedDate DateTime  @updatedAt
-  Author           Author?   @relation(fields: [authorId], references: [id])
-  authorId         Int?
+  authorName       String
   comments         Comment[]
-}
-
-model Author {
-  id       Int       @id @default(autoincrement())
-  name     String
-  articles Article[]
-  comments Comment[]
 }
 
 model Comment {
   id          Int      @id @default(autoincrement())
   text        String
   createdDate DateTime @default(value: now())
-  Author      Author?  @relation(fields: [authorId], references: [id])
-  authorId    Int?
-  Article     Article? @relation(fields: [articleId], references: [id])
+  authorName  String
+  article     Article? @relation(fields: [articleId], references: [id])
   articleId   Int?
 }

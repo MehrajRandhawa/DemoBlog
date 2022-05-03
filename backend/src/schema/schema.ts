@@ -3,27 +3,20 @@ import { gql } from "apollo-server-express";
 const typeDefs = gql`
   type Article {
     id: ID!
-    textHeading: String!
-    textBody: String!
-    author: User!
-    comment: [Comment]
-    createdDate: String!
-    lastModifiedDate: String!
-  }
-  
-  type User {
-    id: ID!
-    name: String!
-    articles: [Article]
+    textHeading: String
+    textBody: String
+    authorName: String
     comments: [Comment]
+    createdDate: String
+    lastModifiedDate: String
   }
 
   type Comment {
-    id: ID!
-    text: String!
-    author: User!
-    article: Article!
-    createdDate: String!
+    id: ID
+    text: String
+    authorName: String
+    article: Article
+    createdDate: String
   }
 
   type Query {
@@ -34,20 +27,20 @@ const typeDefs = gql`
   }
 
   input CreateArticleInput {
-    textHeading: String
-    textBody: String
-    authorId: ID
+    textHeading: String!
+    textBody: String!
+    authorName: String!
   }
 
-  input CreateComment {
-    comment: String
-    authorId: ID
-    articleId: ID
+  input CreateCommentInput {
+    text: String!
+    authorName: String!
+    articleId: ID!
   }
 
   type Mutation {
-    createArticle(article) : Article
-    createComment(comment) : Comment
+    createArticle(article: CreateArticleInput): Article
+    createComment(comment: CreateCommentInput): Comment
   }
 `;
 
