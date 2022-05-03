@@ -1,5 +1,9 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ArticleCard } from "./ArticleCard";
+import { TitleCard } from "./TitleCard";
+
+const CARDS_PER_ROW = 4;
 
 interface ArticleOverviewProps {
   articles?: Array<string>;
@@ -8,17 +12,22 @@ interface ArticleOverviewProps {
 const ArticleOverview: React.FunctionComponent<ArticleOverviewProps> = ({
   articles,
 }) => {
-  const firstThreeArticles = articles?.slice(0, 3);
-  const remainingArtivles = articles?.slice(3);
+  const firstRowArticles = articles?.slice(0, CARDS_PER_ROW);
+  const remainingArticles = articles?.slice(CARDS_PER_ROW);
+
   return (
     <SWrapper>
-      {firstThreeArticles?.map((article) => (
-        <ArticleCard text={article} />
+      {firstRowArticles?.map((article) => (
+        <StyledLink to={`/article/${article}`}>
+          <ArticleCard text={article} />{" "}
+        </StyledLink>
       ))}
-      <TitleCard>Title</TitleCard>
+      <TitleCard title="Demo React Project" />
 
-      {remainingArtivles?.map((article) => (
-        <ArticleCard text={article} />
+      {remainingArticles?.map((article) => (
+        <StyledLink to={`/article/${article}`}>
+          <ArticleCard text={article} />
+        </StyledLink>
       ))}
     </SWrapper>
   );
@@ -28,21 +37,14 @@ export default ArticleOverview;
 
 const SWrapper = styled.div`
   width: 100%;
-
   padding: 1%;
-
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-
-  border: solid;
 `;
 
-const TitleCard = styled.div`
-  border: solid;
-
-  height: 150px;
-
-  margin: 20px;
-  width: 100%;
+const StyledLink = styled(Link)`
+  width: ${90 / CARDS_PER_ROW}%;
+  text-decoration: none;     
+  color: white;
 `;

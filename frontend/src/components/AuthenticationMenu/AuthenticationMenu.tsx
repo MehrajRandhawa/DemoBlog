@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../../utils/colors/colors";
+import { BORDER_RADIUS } from "../ArticleOverview/ArticleCard";
 import Button from "../Button/Button";
 import UserIcon from "../Icons/UserIcon";
 
@@ -69,13 +71,22 @@ const UserDropdown = () => {
     };
   });
 
+  const logOut = useCallback(()=> {
+    console.log('Loggin out');
+  }, []);
+
   return (
     <UserDropdownContainer onClick={toggle} ref={ref}>
       <DropdownMainElement>
         <SUserIcon />
         <UsernameLabel>UserName</UsernameLabel>
       </DropdownMainElement>
-      {isVisible && <LogOutButton>Log Out</LogOutButton>}
+      {isVisible && (
+        <DropdownList>
+          <NavLink to="/upload"><DropdownListElement><UploadButton>Upload</UploadButton></DropdownListElement></NavLink>
+          <DropdownListElement><LogOutButton onPressHandler={logOut}>Log Out</LogOutButton></DropdownListElement>
+        </DropdownList>
+      )}
     </UserDropdownContainer>
   );
 };
@@ -94,6 +105,7 @@ const DropdownMainElement = styled.div`
   flex-direction: row;
   height: 100%;
   padding-left: 2px;
+
 `;
 
 const SUserIcon = styled(UserIcon)`
@@ -112,6 +124,46 @@ const LogOutButton = styled(Button)`
   height: 5%;
   color: ${colors.monochrome.WHITE};
   border: none;
+  background-color: inherit;
+  position: absolute;
+  z-index: 1;
+  margin-top: 1px;
+  padding: 0;
+  cursor: pointer;
+`;
+
+const UploadButton = styled(Button)`
+  width: inherit;
+  height: 5%;
+  color: ${colors.monochrome.WHITE};
+  border: none;
+  background-color: inherit;
+  position: absolute;
+  z-index: 1;
+  margin-top: 1px;
+  padding: 0;
+  cursor: pointer;
+`;
+
+const DropdownListElement = styled.li`
+display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 3px;
+  height: 30px;
+  text-decoration: none;
+  list-style-type: none;
+  border-style: solid;
+  border-color: black;
+  border-width: 0px 0px 1px 0px;
+
+  &:hover {
+    background-color: ${colors.primary.GRAY_3};
+  }
+`;
+
+const DropdownList = styled.ul`
+  width: inherit;
   background-color: inherit;
   position: absolute;
   z-index: 1;

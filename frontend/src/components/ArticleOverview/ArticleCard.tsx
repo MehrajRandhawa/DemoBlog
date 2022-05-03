@@ -11,7 +11,6 @@ export const ArticleCard: React.FunctionComponent<ArticleCardProps> = ({
   text,
 }) => {
   const randomColor = getRandomColor();
-  console.log("color for SublePrisma: ", randomColor);
   return (
     <SWrapper>
       <Picture>
@@ -22,7 +21,7 @@ export const ArticleCard: React.FunctionComponent<ArticleCardProps> = ({
         />
       </Picture>
       <HeadingWrapper>
-        {text} hashdkaskdjskajd lkasjdkljsak ljdkl saj
+        {text}
       </HeadingWrapper>
       <CardMetaDataWrapper>
         <AuthorWrapper>
@@ -38,18 +37,17 @@ export const ArticleCard: React.FunctionComponent<ArticleCardProps> = ({
   );
 };
 
-const BORDER_RADIUS = "10px";
+export const BORDER_RADIUS = "10px";
 
 const SWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background-color: ${colors.primary.BLUE_4};
-  width: 30%;
   border: solid;
   border-color: ${colors.primary.BLUE_5};
   border-radius: ${BORDER_RADIUS};
-  margin: 10px;
+  margin: 5px;
   transition: transform 0.2s;
 
   :hover {
@@ -62,10 +60,6 @@ const SWrapper = styled.div`
 const Picture = styled.div`
   max-height: 40%;
   margin: 5px;
-`;
-
-const Thumbnail = styled(SubtlePrisma)`
-  z-index: -1;
 `;
 
 const HeadingWrapper = styled.h2`
@@ -95,7 +89,12 @@ const AuthorName = styled.div`
   padding: 5px;
 `;
 
-const DateWrapper = styled.div``;
+const DateWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  font-size: 10px;
+`;
 
 const DateText = styled.div`
   margin: 2px;

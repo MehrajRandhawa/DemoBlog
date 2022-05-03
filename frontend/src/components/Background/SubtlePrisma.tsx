@@ -1,6 +1,5 @@
 import { Property } from "csstype";
-import React from "react";
-
+import React, { useId } from "react";
 //Source: https://www.svgbackgrounds.com/category/abstract/
 
 interface IconProps {
@@ -38,13 +37,20 @@ const SubtlePrisma: React.FunctionComponent<IconProps> = ({
   fill_7,
   ...rest
 }) => {
+  const firstId = useId();
+  const secondId = useId();
 
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" {...rest}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="100%"
+      height="100%"
+      {...rest}
+    >
       <rect fill="#ffffff" width={width} />
       <defs>
         <linearGradient
-          id="a"
+          id={firstId}
           gradientUnits="userSpaceOnUse"
           x1="0"
           x2="0"
@@ -57,7 +63,7 @@ const SubtlePrisma: React.FunctionComponent<IconProps> = ({
         </linearGradient>
         <pattern
           patternUnits="userSpaceOnUse"
-          id="b"
+          id={secondId}
           width={prismaWidth}
           height={prismaHeight}
           x="0"
@@ -137,8 +143,8 @@ const SubtlePrisma: React.FunctionComponent<IconProps> = ({
           </g>
         </pattern>
       </defs>
-      <rect x="0" y="0" fill="url(#a)" width="100%" height="100%" />
-      <rect x="0" y="0" fill="url(#b)" width="100%" height="100%" />
+      <rect x="0" y="0" fill={`url(#${firstId})`} width="100%" height="100%" />
+      <rect x="0" y="0" fill={`url(#${secondId})`} width="100%" height="100%" />
     </svg>
   );
 };
