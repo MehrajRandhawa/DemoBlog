@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
-import ModifyIcon from "../components/Icons/ModifyIcon";
 import styled from "styled-components";
 import CommentSection from "../components/CommentSection/CommentSection";
 interface ArticleProps {}
