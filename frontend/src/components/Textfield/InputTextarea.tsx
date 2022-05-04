@@ -8,6 +8,7 @@ interface TextfieldProps {
   contextMessage?: string;
   maxLength?: number;
   forwardedRef: React.RefObject<HTMLTextAreaElement>;
+  onChange?: () => void
 }
 
 const InputTextarea = forwardRef(
@@ -17,6 +18,7 @@ const InputTextarea = forwardRef(
     contextMessage,
     maxLength,
     forwardedRef,
+    onChange,
     ...rest
   }: TextfieldProps) => {
     const [count, setCount] = useState(0);
@@ -35,6 +37,7 @@ const InputTextarea = forwardRef(
           onChange={contentChange}
           ref={forwardedRef}
           {...rest}
+          onInput={onChange}
         />
         <SContextWrapper>
           <SContextMessage>{contextMessage}</SContextMessage>
@@ -55,7 +58,7 @@ const SWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%;
+  width: 100%;
 `;
 
 const SHeading = styled.h1`

@@ -13,11 +13,6 @@ const ARTICLE = gql`
       authorName
       createdDate
       lastModifiedDate
-      comments {
-        text
-        authorName
-        createdDate
-      }
     }
   }
 `;
@@ -33,7 +28,7 @@ const Article = () => {
       ) : (
         <div>
           <StyledMarkdown options={{ forceBlock: true }} children={data.article.textBody} />
-          <CommentSection comments={data.article.comments}/>
+          <CommentSection  articleId={id!}/>
         </div>
       )}
     </Wrapper>

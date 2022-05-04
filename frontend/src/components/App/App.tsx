@@ -34,11 +34,8 @@ export default App;
 
 const NavBarLinks: Links = [
   ["/overview", "Overview"],
-  ["/about", "About"],
 ];
 
 const FooterLinks: Links = [
-  ["/overview", "Overview"],
-  ["/upload", "Upload"],
   ["/about", "About"],
 ];

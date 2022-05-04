@@ -22,8 +22,7 @@ const typeDefs = gql`
   type Query {
     articles: [Article]
     article(id: ID): Article
-    comments: [Comment]
-    comment(id: ID): Comment
+    comments(id: ID): [Comment]
   }
 
   input CreateArticleInput {

@@ -9,7 +9,6 @@ const resolvers = {
       const articles = await prisma.article.findMany({
         include: { comments: true },
       });
-      console.log(articles);
       return articles;
     },
     article: async (_: unknown, args: ResolverTypes.ArgumentId) => {
@@ -22,23 +21,14 @@ const resolvers = {
       });
       return article;
     },
-    comments: async () => {
+    comments: async (_: unknown, args: ResolverTypes.ArgumentId) => {
+      const { id } = args;
       const comments = await prisma.comment.findMany({
-        include: { article: true },
+        where: { articleId: Number(id) },
       });
 
       return comments;
-    },
-    comment: async (_: unknown, args: ResolverTypes.ArgumentId) => {
-      const { id } = args;
-      const comment = await prisma.comment.findUnique({
-        where: { id: Number(id) },
-        include: {
-          article: true,
-        },
-      });
-      return comment;
-    },
+    }
   },
   Mutation: {
     createArticle: async (

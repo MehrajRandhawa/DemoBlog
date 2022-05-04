@@ -49,7 +49,6 @@ var resolvers = {
                         })];
                     case 1:
                         articles = _a.sent();
-                        console.log(articles);
                         return [2, articles];
                 }
             });
@@ -72,37 +71,21 @@ var resolvers = {
                 }
             });
         }); },
-        comments: function () { return __awaiter(void 0, void 0, void 0, function () {
-            var comments;
+        comments: function (_, args) { return __awaiter(void 0, void 0, void 0, function () {
+            var id, comments;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4, prisma.comment.findMany({
-                            include: { article: true },
-                        })];
+                    case 0:
+                        id = args.id;
+                        return [4, prisma.comment.findMany({
+                                where: { articleId: Number(id) },
+                            })];
                     case 1:
                         comments = _a.sent();
                         return [2, comments];
                 }
             });
-        }); },
-        comment: function (_, args) { return __awaiter(void 0, void 0, void 0, function () {
-            var id, comment;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        id = args.id;
-                        return [4, prisma.comment.findUnique({
-                                where: { id: Number(id) },
-                                include: {
-                                    article: true,
-                                },
-                            })];
-                    case 1:
-                        comment = _a.sent();
-                        return [2, comment];
-                }
-            });
-        }); },
+        }); }
     },
     Mutation: {
         createArticle: function (_, args) { return __awaiter(void 0, void 0, void 0, function () {

@@ -12,7 +12,7 @@ const AuthenticationMenu: React.FunctionComponent<
   AuthenticationMenuProps
 > = ({}) => {
   const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
-  console.log(user);
+
   const logIn = () => {
     loginWithRedirect();
   };
@@ -34,6 +34,10 @@ const LoginButton = styled(Button)`
   height: 70%;
   background-color: ${colors.primary.GRAY_2};
   color: ${colors.monochrome.WHITE};
+
+  :hover {
+    background-color: ${colors.primary.GRAY_1};
+  }
 `;
 
 const SWrapper = styled.div`
