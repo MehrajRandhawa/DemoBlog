@@ -4,6 +4,17 @@ import MarkdownPreview from "@uiw/react-markdown-preview";
 import Button from "../components/Button/Button";
 import InputTextarea from "../components/Textfield/InputTextarea";
 import colors from "../utils/colors/colors";
+import { gql } from "@apollo/client";
+
+const CREATE_ARTICLE = gql`
+  mutation Mutation($comment: CreateCommentInput) {
+    createComment(comment: $comment) {
+      text
+      authorName
+      createdDate
+    }
+  }
+`;
 
 const Upload: React.FunctionComponent = () => {
   const [md, setMd] = useState<string | undefined>("");
@@ -23,7 +34,7 @@ const Upload: React.FunctionComponent = () => {
 
   const onTypeHeading = () => {
     setHeading(headingRef.current?.value);
-  }
+  };
 
   const placeholderText =
     "Important: type new Article in html tags to ensure formatting";
