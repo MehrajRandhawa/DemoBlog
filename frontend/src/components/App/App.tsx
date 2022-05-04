@@ -8,6 +8,7 @@ import Footer from "../Footer/Footer";
 import Upload from "../../pages/Upload";
 import Article from "../../pages/Article";
 import { GraphQLClient } from "graphql-request";
+import About from "../../pages/About";
 
 const graphqlClient = new GraphQLClient("http://localhost:4000/graphql");
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/overview" element={<Overview client={graphqlClient}/>}></Route>
           <Route path="/upload" element={<Upload client={graphqlClient}/>}></Route>
           <Route path="/article/:id" element={<Article client={graphqlClient}/>}></Route>
+          <Route path="/about" element={<About />}></Route>
         </Routes>
         <Footer links={FooterLinks} />
       </body>
