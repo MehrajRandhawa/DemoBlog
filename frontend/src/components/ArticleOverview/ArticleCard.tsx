@@ -1,16 +1,29 @@
 import styled from "styled-components";
 import colors, { getRandomColor } from "../../utils/colors/colors";
+import { getDateWithoutTimeStamp } from "../../utils/utils";
 import SubtlePrisma from "../Background/SubtlePrisma";
 import UserIcon from "../Icons/UserIcon";
 
 interface ArticleCardProps {
-  text: string;
+  heading: string;
+  authorName: string;
+  createdAtDate: string;
+  lastModifiedAtDate: string;
 }
 
 export const ArticleCard: React.FunctionComponent<ArticleCardProps> = ({
-  text,
+  heading,
+  authorName,
+  createdAtDate,
+  lastModifiedAtDate,
 }) => {
   const randomColor = getRandomColor();
+
+  const createdAt = getDateWithoutTimeStamp(new Date(Number(createdAtDate)));
+  const lastModifiedAt = getDateWithoutTimeStamp(
+    new Date(Number(lastModifiedAtDate))
+  );
+
   return (
     <SWrapper>
       <Picture>
@@ -20,17 +33,15 @@ export const ArticleCard: React.FunctionComponent<ArticleCardProps> = ({
           stopFill={randomColor}
         />
       </Picture>
-      <HeadingWrapper>
-        {text}
-      </HeadingWrapper>
+      <HeadingWrapper>{heading}</HeadingWrapper>
       <CardMetaDataWrapper>
         <AuthorWrapper>
           <SUserIcon />
-          <AuthorName>Author Name</AuthorName>
+          <AuthorName>{authorName}</AuthorName>
         </AuthorWrapper>
         <DateWrapper>
-          <DateText>Created at: </DateText>
-          <DateText>Last modified at:</DateText>
+          <DateText>{`Created at: ${createdAt}`}</DateText>
+          <DateText>{`Last modified at: ${lastModifiedAt}`}</DateText>
         </DateWrapper>
       </CardMetaDataWrapper>
     </SWrapper>
@@ -85,8 +96,7 @@ const AuthorName = styled.div`
   display: flex;
   text-align: center;
   align-items: center;
-  justify-content: center;
-  padding: 5px;
+  justify-content: flex-start;
 `;
 
 const DateWrapper = styled.div`

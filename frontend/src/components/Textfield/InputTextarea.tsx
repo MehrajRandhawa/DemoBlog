@@ -55,7 +55,7 @@ const SWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 90%;
 `;
 
 const SHeading = styled.h1`

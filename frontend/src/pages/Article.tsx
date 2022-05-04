@@ -1,18 +1,41 @@
 import { useParams } from "react-router-dom";
-import ReactMarkdown from "react-markdown";
+import Markdown from 'markdown-to-jsx';
 import styled from "styled-components";
 import CommentSection from "../components/CommentSection/CommentSection";
-interface ArticleProps {}
+import { gql, useQuery } from "@apollo/client";
 
-const Article = ({}) => {
+const ARTICLE = gql`
+  query Article($id: ID!) {
+    article(id: $id) {
+      id
+      textHeading
+      textBody
+      authorName
+      createdDate
+      lastModifiedDate
+      comments {
+        text
+        authorName
+        createdDate
+      }
+    }
+  }
+`;
+
+const Article = () => {
   const { id } = useParams();
-  const text = `# Article 
-    is
-    ${id}`;
+  const { loading, data } = useQuery(ARTICLE, { variables: { id: id } });
+
   return (
     <Wrapper>
-      <StyledMarkdown>{text}</StyledMarkdown>
-      <CommentSection/>
+      {loading ? (
+        <div>Loading</div>
+      ) : (
+        <div>
+          <StyledMarkdown options={{ forceBlock: true }} children={data.article.textBody} />
+          <CommentSection comments={data.article.comments}/>
+        </div>
+      )}
     </Wrapper>
   );
 };
@@ -28,6 +51,7 @@ const Wrapper = styled.div`
   padding: 20px;
 `;
 
-const StyledMarkdown = styled(ReactMarkdown)`
+const StyledMarkdown = styled(Markdown)`
   width: inherit;
+  margin-bottom: 20px;
 `;

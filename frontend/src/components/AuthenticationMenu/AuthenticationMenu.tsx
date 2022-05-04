@@ -2,20 +2,27 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../../utils/colors/colors";
-import { BORDER_RADIUS } from "../ArticleOverview/ArticleCard";
 import Button from "../Button/Button";
 import UserIcon from "../Icons/UserIcon";
+import { useAuth0 } from "@auth0/auth0-react";
 
-interface AuthenticationMenuProps {
-  isAuthenticated?: boolean;
-}
+interface AuthenticationMenuProps {}
 
-const AuthenticationMenu: React.FunctionComponent<AuthenticationMenuProps> = ({
-  isAuthenticated = false,
-}) => {
+const AuthenticationMenu: React.FunctionComponent<
+  AuthenticationMenuProps
+> = ({}) => {
+  const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
+  console.log(user);
+  const logIn = () => {
+    loginWithRedirect();
+  };
   return (
     <SWrapper>
-      {isAuthenticated ? <UserDropdown /> : <LoginButton>Log In</LoginButton>}
+      {isAuthenticated ? (
+        <UserDropdown userName={user?.nickname!} logOutHandler={logout}/>
+      ) : (
+        <LoginButton onPressHandler={logIn}>Log In</LoginButton>
+      )}
     </SWrapper>
   );
 };
@@ -37,7 +44,12 @@ const SWrapper = styled.div`
   height: 100%;
 `;
 
-const UserDropdown = () => {
+interface UserDropDownInterface {
+  userName: string;
+  logOutHandler: () => void;
+}
+
+const UserDropdown: React.FunctionComponent<UserDropDownInterface> = ({userName, logOutHandler}) => {
   const [isVisible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -71,20 +83,27 @@ const UserDropdown = () => {
     };
   });
 
-  const logOut = useCallback(()=> {
-    console.log('Loggin out');
+  const logOut = useCallback(() => {
+    console.log("Loggin out");
+    logOutHandler();
   }, []);
 
   return (
     <UserDropdownContainer onClick={toggle} ref={ref}>
       <DropdownMainElement>
         <SUserIcon />
-        <UsernameLabel>UserName</UsernameLabel>
+        <UsernameLabel>{userName}</UsernameLabel>
       </DropdownMainElement>
       {isVisible && (
         <DropdownList>
-          <NavLink to="/upload"><DropdownListElement><UploadButton>Upload</UploadButton></DropdownListElement></NavLink>
-          <DropdownListElement><LogOutButton onPressHandler={logOut}>Log Out</LogOutButton></DropdownListElement>
+          <NavLink to="/upload">
+            <DropdownListElement>
+              <UploadButton>Upload</UploadButton>
+            </DropdownListElement>
+          </NavLink>
+          <DropdownListElement>
+            <LogOutButton onPressHandler={logOut}>Log Out</LogOutButton>
+          </DropdownListElement>
         </DropdownList>
       )}
     </UserDropdownContainer>
@@ -105,7 +124,6 @@ const DropdownMainElement = styled.div`
   flex-direction: row;
   height: 100%;
   padding-left: 2px;
-
 `;
 
 const SUserIcon = styled(UserIcon)`
@@ -146,7 +164,7 @@ const UploadButton = styled(Button)`
 `;
 
 const DropdownListElement = styled.li`
-display: flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 5px 3px;

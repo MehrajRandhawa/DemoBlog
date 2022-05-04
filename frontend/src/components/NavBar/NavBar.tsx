@@ -26,6 +26,7 @@ const NavBar: React.FunctionComponent<NavBarProps> = ({
       return <NavBarLink to={link[0]}>{link[1]}</NavBarLink>;
     });
   }, [links]);
+
   return (
     <NavBarContainer>
       {isDefined(icon) && (
@@ -36,7 +37,7 @@ const NavBar: React.FunctionComponent<NavBarProps> = ({
       )}
       <NavBarMenu>{NavLinkElements}</NavBarMenu>
       <AuthenticationMenuContainer>
-        <AuthenticationMenu isAuthenticated={false}/>
+        <AuthenticationMenu/>
       </AuthenticationMenuContainer>
     </NavBarContainer>
   );
