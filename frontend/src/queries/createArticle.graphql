@@ -1,0 +1,9 @@
+mutation CreateArticle($article: CreateArticleInput) {
+  createArticle(article: $article) {
+    textHeading
+    textBody
+    authorName
+    createdDate
+    lastModifiedDate
+  }
+}

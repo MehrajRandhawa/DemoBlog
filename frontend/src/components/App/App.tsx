@@ -7,6 +7,9 @@ import LogoIcon from "../Icons/LogoIcon";
 import Footer from "../Footer/Footer";
 import Upload from "../../pages/Upload";
 import Article from "../../pages/Article";
+import { GraphQLClient } from "graphql-request";
+
+const graphqlClient = new GraphQLClient("http://localhost:4000/graphql");
 
 function App() {
   return (
@@ -19,10 +22,10 @@ function App() {
       </header>
       <body>
         <Routes>
-          <Route path="/" element={<Overview />}></Route>
-          <Route path="/overview" element={<Overview />}></Route>
-          <Route path="/upload" element={<Upload />}></Route>
-          <Route path="/article/:id" element={<Article />}></Route>
+          <Route path="/" element={<Overview client={graphqlClient}/>}></Route>
+          <Route path="/overview" element={<Overview client={graphqlClient}/>}></Route>
+          <Route path="/upload" element={<Upload client={graphqlClient}/>}></Route>
+          <Route path="/article/:id" element={<Article client={graphqlClient}/>}></Route>
         </Routes>
         <Footer links={FooterLinks} />
       </body>
@@ -32,10 +35,6 @@ function App() {
 
 export default App;
 
-const NavBarLinks: Links = [
-  ["/overview", "Overview"],
-];
+const NavBarLinks: Links = [["/overview", "Overview"]];
 
-const FooterLinks: Links = [
-  ["/about", "About"],
-];
+const FooterLinks: Links = [["/about", "About"]];

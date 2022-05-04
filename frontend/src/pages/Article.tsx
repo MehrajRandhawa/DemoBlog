@@ -2,33 +2,24 @@ import { useParams } from "react-router-dom";
 import Markdown from 'markdown-to-jsx';
 import styled from "styled-components";
 import CommentSection from "../components/CommentSection/CommentSection";
-import { gql, useQuery } from "@apollo/client";
 
-const ARTICLE = gql`
-  query Article($id: ID!) {
-    article(id: $id) {
-      id
-      textHeading
-      textBody
-      authorName
-      createdDate
-      lastModifiedDate
-    }
-  }
-`;
+import { PageProps } from "../utils/types/interfaces";
+import { GetArticleQuery, useGetArticleQuery } from "../generated/queries";
 
-const Article = () => {
+
+
+const Article: React.FunctionComponent<PageProps> = ({client}) => {
   const { id } = useParams();
-  const { loading, data } = useQuery(ARTICLE, { variables: { id: id } });
+  const { isLoading, data } = useGetArticleQuery<GetArticleQuery, Error>(client, {articleId: id});
 
   return (
     <Wrapper>
-      {loading ? (
+      {isLoading ? (
         <div>Loading</div>
       ) : (
         <div>
-          <StyledMarkdown options={{ forceBlock: true }} children={data.article.textBody} />
-          <CommentSection  articleId={id!}/>
+          <StyledMarkdown options={{ forceBlock: true }} children={data?.article?.textBody} />
+          <CommentSection client={client} articleId={id!}/>
         </div>
       )}
     </Wrapper>

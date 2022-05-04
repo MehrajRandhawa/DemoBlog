@@ -1,0 +1,7 @@
+mutation CreateComment($comment: CreateCommentInput) {
+  createComment(comment: $comment) {
+    text
+    authorName
+    createdDate
+  }
+}

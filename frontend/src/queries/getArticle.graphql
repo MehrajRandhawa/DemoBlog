@@ -1,0 +1,14 @@
+query GetArticle($articleId: ID) {
+  article(id: $articleId) {
+    textHeading
+    textBody
+    authorName
+    comments {
+      text
+      authorName
+      createdDate
+    }
+    createdDate
+    lastModifiedDate
+  }
+}

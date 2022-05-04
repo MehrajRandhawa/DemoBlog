@@ -1,6 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
+
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { GetArticlesQuery, useGetArticlesQuery } from "../../generated/queries";
 import { ArticleType } from "../../utils/types/types";
 import { isDefined } from "../../utils/utils";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
@@ -9,31 +10,21 @@ import { TitleCard } from "./TitleCard";
 
 const CARDS_PER_ROW = 3;
 
-const ARTICLES = gql`
-  query Articles {
-    articles {
-      id
-      textHeading
-      authorName
-      createdDate
-      lastModifiedDate
-    }
-  }
-`;
+interface ArticleOverviewProps {
+  client: any
+}
 
-interface ArticleOverviewProps {}
-
-const ArticleOverview: React.FunctionComponent<ArticleOverviewProps> = () => {
-  const { loading, data } = useQuery(ARTICLES);
+const ArticleOverview: React.FunctionComponent<ArticleOverviewProps> = ({client}) => {
+  const { isLoading, data } = useGetArticlesQuery<GetArticlesQuery, Error>(client, {});
   console.log(data);
 
   let firstRowArticles;
   let remainingArticles;
 
-  if(!loading){
-    const numberArticles: number = data.articles.length;
+  if(!isLoading){
+    const numberArticles: number = data?.articles?.length!;
     console.log(numberArticles)
-    const sortedArticles = data.articles.map((element: any) => element).sort(
+    const sortedArticles = data?.articles?.map((element: any) => element).sort(
       (a: Partial<ArticleType>, b: Partial<ArticleType>) => Number(a.id) - Number(b.id)
     );
       console.log(sortedArticles)
@@ -46,7 +37,7 @@ const ArticleOverview: React.FunctionComponent<ArticleOverviewProps> = () => {
   
   }
 
-  return loading ? (
+  return isLoading ? (
     <LoadingIndicator />
   ) : (
     <SWrapper>

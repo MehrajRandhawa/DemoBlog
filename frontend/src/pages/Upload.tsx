@@ -4,28 +4,21 @@ import MarkdownPreview from "@uiw/react-markdown-preview";
 import Button from "../components/Button/Button";
 import InputTextarea from "../components/Textfield/InputTextarea";
 import colors from "../utils/colors/colors";
-import { gql } from "@apollo/client";
+import { PageProps } from "../utils/types/interfaces";
+import { CreateArticleMutation, useCreateArticleMutation } from "../generated/queries";
+import { useAuth0 } from "@auth0/auth0-react";
 
-const CREATE_ARTICLE = gql`
-  mutation Mutation($comment: CreateCommentInput) {
-    createComment(comment: $comment) {
-      text
-      authorName
-      createdDate
-    }
-  }
-`;
-
-const Upload: React.FunctionComponent = () => {
+const Upload: React.FunctionComponent<PageProps> = ({client}) => {
   const [md, setMd] = useState<string | undefined>("");
   const [heading, setHeading] = useState<string | undefined>("");
-
+  const { user } = useAuth0();
   const headingRef = useRef<HTMLTextAreaElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
 
+  const createArticle = useCreateArticleMutation<CreateArticleMutation, Error>(client);
+
   const uploadArticle = () => {
-    console.log("headingRef: ", headingRef.current?.value);
-    console.log("bodyRef: ", bodyRef.current?.value);
+    createArticle.mutate({article: { textHeading: heading!, textBody: md!, authorName: user?.nickname!}})
   };
 
   const onTypeMarkdown = () => {

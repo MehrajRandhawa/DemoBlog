@@ -1,69 +1,41 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useCallback, useRef } from "react";
 import styled from "styled-components";
+import { CreateCommentMutation, GetCommentsQuery, useCreateCommentMutation, useGetCommentsQuery } from "../../generated/queries";
 import colors from "../../utils/colors/colors";
-import { CommentType } from "../../utils/types/types";
 import { getDate, getDateWithoutTimeStamp } from "../../utils/utils";
 import { BORDER_RADIUS } from "../ArticleOverview/ArticleCard";
 import Button from "../Button/Button";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import InputTextarea from "../Textfield/InputTextarea";
+import { useQueryClient } from 'react-query'
 
 const MAX_COMMENT_LENGTH = 500;
 
-// This is just for demo purposes. For real projects use more efficient methods to query backend data after mutation:
-// https://www.apollographql.com/blog/apollo-client/caching/when-to-use-refetch-queries/
-
 interface CommentSectionProps {
+  client: any,
   articleId: string;
 }
 
-const CREATE_COMMENT = gql`
-  mutation Mutation($comment: CreateCommentInput) {
-    createComment(comment: $comment) {
-      text
-      authorName
-      createdDate
-    }
-  }
-`;
-
-const GET_COMMENTS = gql`
-  query Comments($id: ID) {
-    comments(id: $id) {
-      text
-      authorName
-      createdDate
-    }
-  }
-`;
-
 const CommentSection: React.FunctionComponent<CommentSectionProps> = ({
-  articleId,
+  articleId, client,
 }) => {
   const textAreaInputRef = useRef<HTMLTextAreaElement>(null);
   const { isAuthenticated, user } = useAuth0();
-  const [createComment] = useMutation(CREATE_COMMENT, {
-    refetchQueries: [{ query: GET_COMMENTS }],
-  });
-  const { data, loading } = useQuery(GET_COMMENTS, {
-    variables: { id: articleId },
-  });
+
+  const queryClient = useQueryClient();
+
+  const {isLoading, data} = useGetCommentsQuery<GetCommentsQuery, Error>(client, {articleId: articleId});
+  const createComment = useCreateCommentMutation<CreateCommentMutation, Error>(client, {onSuccess: () => {
+    queryClient.invalidateQueries('comments');
+  }});
 
   const uploadComment = useCallback(() => {
-    const text = textAreaInputRef?.current?.value;
-    console.log(text);
-    createComment({
-      variables: {
-        comment: {
-          text: text,
-          authorName: user?.nickname,
-          articleId: articleId,
-        },
-      },
-    });
-  }, [articleId, createComment, user]);
+    const text = textAreaInputRef?.current?.value!;
+    createComment.mutate({comment: {text: text, authorName: user?.nickname!, articleId: articleId} })
+
+  }, [articleId, createComment, user?.nickname]);
 
 
   return (
@@ -82,23 +54,18 @@ const CommentSection: React.FunctionComponent<CommentSectionProps> = ({
         <CommentInput>Log in to comment</CommentInput>
       )}
 
-      {loading ? (
+      {isLoading ? (
         <LoadingIndicator />
       ) : (
-        data.comments.map(
-          (comment: {
-            text: string;
-            authorName: string;
-            createdDate: string;
-          }) => {
+        data?.comments?.map(
+          (comment) => {
             return (
               <CommentWrapper>
-                <Comment>{comment.text}</Comment>
+                <Comment>{comment?.text}</Comment>
                 <CommentMetaData>
-                  <UserName>User: {comment.authorName}</UserName>
+                  <UserName>User: {comment?.authorName}</UserName>
                   <Date>
-                    Created at:
-                    {getDateWithoutTimeStamp(getDate(comment.createdDate))}
+                    Created at: {getDateWithoutTimeStamp(getDate(comment?.createdDate!))}
                   </Date>
                 </CommentMetaData>
               </CommentWrapper>
@@ -161,3 +128,5 @@ const CommentMetaData = styled.div`
 const UserName = styled.div``;
 
 const Date = styled.div``;
+
+

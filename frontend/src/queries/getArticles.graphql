@@ -1,0 +1,15 @@
+query GetArticles {
+  articles {
+    textHeading
+    textBody
+    authorName
+    comments {
+      text
+      authorName
+      createdDate
+    }
+    createdDate
+    lastModifiedDate
+    id
+  }
+}
