@@ -19,7 +19,7 @@ const AuthenticationMenu: React.FunctionComponent<
   return (
     <SWrapper>
       {isAuthenticated ? (
-        <UserDropdown userName={user?.nickname!} logOutHandler={logout}/>
+        <UserDropdown userName={user?.nickname!} logOutHandler={logout} />
       ) : (
         <LoginButton onPressHandler={logIn}>Log In</LoginButton>
       )}
@@ -53,7 +53,10 @@ interface UserDropDownInterface {
   logOutHandler: () => void;
 }
 
-const UserDropdown: React.FunctionComponent<UserDropDownInterface> = ({userName, logOutHandler}) => {
+const UserDropdown: React.FunctionComponent<UserDropDownInterface> = ({
+  userName,
+  logOutHandler,
+}) => {
   const [isVisible, setVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -88,9 +91,8 @@ const UserDropdown: React.FunctionComponent<UserDropDownInterface> = ({userName,
   });
 
   const logOut = useCallback(() => {
-    console.log("Loggin out");
     logOutHandler();
-  }, []);
+  }, [logOutHandler]);
 
   return (
     <UserDropdownContainer onClick={toggle} ref={ref}>

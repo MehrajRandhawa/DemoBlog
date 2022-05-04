@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { GetArticlesQuery, useGetArticlesQuery } from "../../generated/queries";
@@ -11,33 +10,46 @@ import { TitleCard } from "./TitleCard";
 const CARDS_PER_ROW = 3;
 
 interface ArticleOverviewProps {
-  client: any
+  client: any;
 }
 
-const ArticleOverview: React.FunctionComponent<ArticleOverviewProps> = ({client}) => {
-  const { isLoading, data } = useGetArticlesQuery<GetArticlesQuery, Error>(client, {});
+const ArticleOverview: React.FunctionComponent<ArticleOverviewProps> = ({
+  client,
+}) => {
+  const { isLoading, data, error } = useGetArticlesQuery<
+    GetArticlesQuery,
+    Error
+  >(client, {});
   console.log(data);
 
   let firstRowArticles;
   let remainingArticles;
 
-  if(!isLoading){
+  if (!isLoading) {
     const numberArticles: number = data?.articles?.length!;
-    console.log(numberArticles)
-    const sortedArticles = data?.articles?.map((element: any) => element).sort(
-      (a: Partial<ArticleType>, b: Partial<ArticleType>) => Number(a.id) - Number(b.id)
-    );
-      console.log(sortedArticles)
+    console.log(numberArticles);
+    const sortedArticles = data?.articles
+      ?.map((element: any) => element)
+      .sort(
+        (a: Partial<ArticleType>, b: Partial<ArticleType>) =>
+          Number(a.id) - Number(b.id)
+      );
+    console.log(sortedArticles);
     if (numberArticles < CARDS_PER_ROW) {
       firstRowArticles = sortedArticles?.slice(0, numberArticles);
     } else {
       firstRowArticles = sortedArticles?.slice(0, CARDS_PER_ROW);
       remainingArticles = sortedArticles?.slice(CARDS_PER_ROW);
     }
-  
   }
 
-  return isLoading ? (
+  return isDefined(error) ? (
+    <div>
+      ERROR
+      <br />
+      {error?.message}
+    </div>
+  ) : isLoading ? (
     <LoadingIndicator />
   ) : (
     <SWrapper>

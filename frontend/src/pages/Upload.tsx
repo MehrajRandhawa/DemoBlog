@@ -5,20 +5,38 @@ import Button from "../components/Button/Button";
 import InputTextarea from "../components/Textfield/InputTextarea";
 import colors from "../utils/colors/colors";
 import { PageProps } from "../utils/types/interfaces";
-import { CreateArticleMutation, useCreateArticleMutation } from "../generated/queries";
+import {
+  CreateArticleMutation,
+  useCreateArticleMutation,
+} from "../generated/queries";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const Upload: React.FunctionComponent<PageProps> = ({client}) => {
+const Upload: React.FunctionComponent<PageProps> = ({ client }) => {
   const [md, setMd] = useState<string | undefined>("");
   const [heading, setHeading] = useState<string | undefined>("");
   const { user } = useAuth0();
   const headingRef = useRef<HTMLTextAreaElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
 
-  const createArticle = useCreateArticleMutation<CreateArticleMutation, Error>(client);
+  const createArticle = useCreateArticleMutation<CreateArticleMutation, Error>(
+    client,
+    {
+      onSuccess: () => {
+        alert(
+          "Article created! Please visit the overview to see the new article"
+        );
+      },
+    }
+  );
 
   const uploadArticle = () => {
-    createArticle.mutate({article: { textHeading: heading!, textBody: md!, authorName: user?.nickname!}})
+    createArticle.mutate({
+      article: {
+        textHeading: heading!,
+        textBody: md!,
+        authorName: user?.nickname!,
+      },
+    });
   };
 
   const onTypeMarkdown = () => {

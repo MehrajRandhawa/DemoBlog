@@ -1,25 +1,36 @@
 import { useParams } from "react-router-dom";
-import Markdown from 'markdown-to-jsx';
+import Markdown from "markdown-to-jsx";
 import styled from "styled-components";
 import CommentSection from "../components/CommentSection/CommentSection";
 
 import { PageProps } from "../utils/types/interfaces";
 import { GetArticleQuery, useGetArticleQuery } from "../generated/queries";
+import { isDefined } from "../utils/utils";
 
-
-
-const Article: React.FunctionComponent<PageProps> = ({client}) => {
+const Article: React.FunctionComponent<PageProps> = ({ client }) => {
   const { id } = useParams();
-  const { isLoading, data } = useGetArticleQuery<GetArticleQuery, Error>(client, {articleId: id});
+  const { isLoading, data, error } = useGetArticleQuery<GetArticleQuery, Error>(
+    client,
+    { articleId: id }
+  );
 
   return (
     <Wrapper>
-      {isLoading ? (
+      {isDefined(error) ? (
+        <div>
+          ERROR
+          <br />
+          {error?.message}
+        </div>
+      ) : isLoading ? (
         <div>Loading</div>
       ) : (
         <div>
-          <StyledMarkdown options={{ forceBlock: true }} children={data?.article?.textBody} />
-          <CommentSection client={client} articleId={id!}/>
+          <StyledMarkdown
+            options={{ forceBlock: true }}
+            children={data?.article?.textBody}
+          />
+          <CommentSection client={client} articleId={id!} />
         </div>
       )}
     </Wrapper>
