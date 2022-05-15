@@ -29,7 +29,7 @@ Frontend:
 - [] Add authorization for backend
 - [x] Add timestamps to dates
 - [x] Invalidate stale data in mutations [Link](https://react-query.tanstack.com/guides/invalidations-from-mutations) -> fix the need to leave page and revisit to see the new mutations
-- [] Improve security for uploads against html injection attacks
+- [x] Improve security for uploads against html injection attacks --> React already does a great job, therefore not necessary
 - [] Login redirects to previous page in history (same with logout)
 - [] Proper usermanagement in backend
 - [] Add image support for markdown
