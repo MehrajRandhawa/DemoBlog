@@ -23,7 +23,7 @@ const NavBar: React.FunctionComponent<NavBarProps> = ({
 }) => {
   const NavLinkElements = useMemo(() => {
     return links.map((link: any[]) => {
-      return <NavBarLink to={link[0]}>{link[1]}</NavBarLink>;
+      return <NavBarLink to={link[0]} key={link[1]}>{link[1]}</NavBarLink>;
     });
   }, [links]);
 

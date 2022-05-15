@@ -53,7 +53,7 @@ const ArticleOverview: React.FunctionComponent<ArticleOverviewProps> = ({
     <SWrapper>
       {isDefined(firstRowArticles) &&
         firstRowArticles.map((article: ArticleType) => (
-          <StyledLink to={`/article/${article.id}`}>
+          <StyledLink key={article.id} to={`/article/${article.id}`}>
             <ArticleCard
               heading={article.textHeading}
               authorName={article.authorName}
@@ -66,7 +66,7 @@ const ArticleOverview: React.FunctionComponent<ArticleOverviewProps> = ({
 
       {isDefined(remainingArticles) &&
         remainingArticles.map((article: ArticleType) => (
-          <StyledLink to={`/article/${article.id}`}>
+          <StyledLink key={article.id} to={`/article/${article.id}`}>
             <ArticleCard
               heading={article.textHeading}
               authorName={article.authorName}
