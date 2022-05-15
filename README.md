@@ -27,7 +27,7 @@ Frontend:
 - [] Persist authentication in localstorage
 - [] Get article icons from database
 - [] Add authorization for backend
-- [] Add timestamps to dates
+- [x] Add timestamps to dates
 - [x] Invalidate stale data in mutations [Link](https://react-query.tanstack.com/guides/invalidations-from-mutations) -> fix the need to leave page and revisit to see the new mutations
 - [] Improve security for uploads against html injection attacks
 - [] Login redirects to previous page in history (same with logout)
