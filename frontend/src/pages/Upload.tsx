@@ -10,6 +10,7 @@ import {
   useCreateArticleMutation,
 } from "../generated/queries";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useQueryClient } from "react-query";
 
 const Upload: React.FunctionComponent<PageProps> = ({ client }) => {
   const [md, setMd] = useState<string | undefined>("");
@@ -17,14 +18,14 @@ const Upload: React.FunctionComponent<PageProps> = ({ client }) => {
   const { user } = useAuth0();
   const headingRef = useRef<HTMLTextAreaElement>(null);
   const bodyRef = useRef<HTMLTextAreaElement>(null);
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries('GetArticles');
 
   const createArticle = useCreateArticleMutation<CreateArticleMutation, Error>(
     client,
     {
       onSuccess: () => {
-        alert(
-          "Article created! Please visit the overview to see the new article"
-        );
+
       },
     }
   );

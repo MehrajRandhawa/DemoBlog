@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useCallback, useRef } from "react";
+import { useQueryClient } from "react-query";
 import styled from "styled-components";
 import {
   CreateCommentMutation,
@@ -15,6 +16,7 @@ import Button from "../Button/Button";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import InputTextarea from "../Textfield/InputTextarea";
 
+
 const MAX_COMMENT_LENGTH = 500;
 
 interface CommentSectionProps {
@@ -28,16 +30,20 @@ const CommentSection: React.FunctionComponent<CommentSectionProps> = ({
 }) => {
   const textAreaInputRef = useRef<HTMLTextAreaElement>(null);
   const { isAuthenticated, user } = useAuth0();
+  const queryClient = useQueryClient();
+
+  queryClient.invalidateQueries("GetComments");
 
   const { isLoading, data, error } = useGetCommentsQuery<
     GetCommentsQuery,
     Error
   >(client, { articleId: articleId });
+
   const createComment = useCreateCommentMutation<CreateCommentMutation, Error>(
     client,
     {
       onSuccess: () => {
-        alert("Comment created! Please leave the page and re-visit it to see the comment");
+
       },
     }
   );
@@ -113,6 +119,7 @@ const CommentInput = styled.div`
   justify-content: space-between;
   align-items: center;
   padding-top: 10px;
+  margin-bottom: 15px;
 `;
 
 const CommentInputArea = styled(InputTextarea)`

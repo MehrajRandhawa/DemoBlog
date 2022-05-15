@@ -29,7 +29,7 @@ function App() {
           <Route path="/article/:id" element={<Article client={graphqlClient}/>}></Route>
           <Route path="/about" element={<About />}></Route>
         </Routes>
-        <Footer links={FooterLinks} />
+        {/* <Footer links={FooterLinks} /> */}
       </body>
     </Router>
   );

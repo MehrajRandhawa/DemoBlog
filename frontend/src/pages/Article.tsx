@@ -25,13 +25,14 @@ const Article: React.FunctionComponent<PageProps> = ({ client }) => {
       ) : isLoading ? (
         <div>Loading</div>
       ) : (
-        <div>
+        <Content>
+          <Heading>{data?.article?.textHeading}</Heading>
           <StyledMarkdown
             options={{ forceBlock: true }}
             children={data?.article?.textBody}
           />
           <CommentSection client={client} articleId={id!} />
-        </div>
+        </Content>
       )}
     </Wrapper>
   );
@@ -43,7 +44,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
   padding: 20px;
 `;
@@ -51,4 +52,14 @@ const Wrapper = styled.div`
 const StyledMarkdown = styled(Markdown)`
   width: inherit;
   margin-bottom: 20px;
+`;
+
+const Heading = styled.h1`
+  margin-bottom: 15px;
+`;
+
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
