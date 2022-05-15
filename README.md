@@ -23,7 +23,7 @@ Frontend:
 - Read articles in markdown format
 - Authentication via auth0
 
-## Possible future improvements
+## Future improvements/Bugfixes
 - [] Persist authentication in localstorage
 - [] Get article icons from database
 - [] Add authorization for backend
@@ -42,3 +42,8 @@ Frontend:
 - [] Add different language support with i18n
 - [] Add CMS (Lokalise)
 - [] Add mobile support
+- [] Global statemanagement with Redux
+- [] Improve code quality and readability
+
+## Good reads:
+- [React Query and Graphql](https://www.scien.cx/2022/01/02/graphql-api-requests-with-typescript-react-query-graphql-code-generator/)
