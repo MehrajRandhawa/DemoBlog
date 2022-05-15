@@ -1,5 +1,5 @@
-export function isDefined(argument: unknown): boolean {
-  return argument === null || argument === undefined ? false : true;
+export function isDefined<T>(argument: T | undefined| null): argument is T {
+  return argument !== null && argument !== undefined ? true : false;
 }
 
 export function getDateWithoutTimeStamp(date: Date): string {

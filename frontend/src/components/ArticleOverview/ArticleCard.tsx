@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import colors, { getRandomColor } from "../../utils/colors/colors";
-import { getDateWithoutTimeStamp } from "../../utils/utils";
+import { getDate } from "../../utils/utils";
 import SubtlePrisma from "../Background/SubtlePrisma";
 import UserIcon from "../Icons/UserIcon";
 
@@ -19,10 +19,8 @@ export const ArticleCard: React.FunctionComponent<ArticleCardProps> = ({
 }) => {
   const randomColor = getRandomColor();
 
-  const createdAt = getDateWithoutTimeStamp(new Date(Number(createdAtDate)));
-  const lastModifiedAt = getDateWithoutTimeStamp(
-    new Date(Number(lastModifiedAtDate))
-  );
+  const createdAt = getDate(createdAtDate).toUTCString();
+  const lastModifiedAt = getDate(lastModifiedAtDate).toUTCString();
 
   return (
     <SWrapper>

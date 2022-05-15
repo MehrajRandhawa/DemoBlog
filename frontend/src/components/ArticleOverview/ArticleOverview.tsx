@@ -6,6 +6,7 @@ import { isDefined } from "../../utils/utils";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import { ArticleCard } from "./ArticleCard";
 import { TitleCard } from "./TitleCard";
+import ErrorScreen from "../Error/ErrorScreen";
 
 const CARDS_PER_ROW = 3;
 
@@ -20,41 +21,38 @@ const ArticleOverview: React.FunctionComponent<ArticleOverviewProps> = ({
     GetArticlesQuery,
     Error
   >(client, {});
-  console.log(data);
+
+  const articles = data?.articles as Array<ArticleType>;
 
   let firstRowArticles;
   let remainingArticles;
 
   if (!isLoading) {
-    const numberArticles: number = data?.articles?.length!;
-    console.log(numberArticles);
-    const sortedArticles = data?.articles
-      ?.map((element: any) => element)
+    const numberArticles: number = articles.length;
+
+    const sortedArticles = articles
+      .map((element: any) => element)
       .sort(
         (a: Partial<ArticleType>, b: Partial<ArticleType>) =>
           Number(a.id) - Number(b.id)
       );
-    console.log(sortedArticles);
+
     if (numberArticles < CARDS_PER_ROW) {
-      firstRowArticles = sortedArticles?.slice(0, numberArticles);
+      firstRowArticles = sortedArticles.slice(0, numberArticles);
     } else {
-      firstRowArticles = sortedArticles?.slice(0, CARDS_PER_ROW);
-      remainingArticles = sortedArticles?.slice(CARDS_PER_ROW);
+      firstRowArticles = sortedArticles.slice(0, CARDS_PER_ROW);
+      remainingArticles = sortedArticles.slice(CARDS_PER_ROW);
     }
   }
 
   return isDefined(error) ? (
-    <div>
-      ERROR
-      <br />
-      {error?.message}
-    </div>
+    <ErrorScreen error={error} />
   ) : isLoading ? (
     <LoadingIndicator />
   ) : (
     <SWrapper>
       {isDefined(firstRowArticles) &&
-        firstRowArticles?.map((article: ArticleType) => (
+        firstRowArticles.map((article: ArticleType) => (
           <StyledLink to={`/article/${article.id}`}>
             <ArticleCard
               heading={article.textHeading}
@@ -67,7 +65,7 @@ const ArticleOverview: React.FunctionComponent<ArticleOverviewProps> = ({
       <TitleCard title="Demo React Project" />
 
       {isDefined(remainingArticles) &&
-        remainingArticles?.map((article: ArticleType) => (
+        remainingArticles.map((article: ArticleType) => (
           <StyledLink to={`/article/${article.id}`}>
             <ArticleCard
               heading={article.textHeading}

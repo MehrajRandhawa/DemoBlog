@@ -1,4 +1,3 @@
-import { useQuery } from "@apollo/client";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useCallback, useRef } from "react";
 import { useQueryClient } from "react-query";
@@ -10,12 +9,13 @@ import {
   useGetCommentsQuery,
 } from "../../generated/queries";
 import colors from "../../utils/colors/colors";
-import { getDate, getDateWithoutTimeStamp, isDefined } from "../../utils/utils";
+import { getDate, isDefined } from "../../utils/utils";
 import { BORDER_RADIUS } from "../ArticleOverview/ArticleCard";
 import Button from "../Button/Button";
 import LoadingIndicator from "../LoadingIndicator/LoadingIndicator";
 import InputTextarea from "../Textfield/InputTextarea";
-
+import ErrorScreen from '../Error/ErrorScreen'
+import { CommentType } from "../../utils/types/types";
 
 const MAX_COMMENT_LENGTH = 500;
 
@@ -39,12 +39,12 @@ const CommentSection: React.FunctionComponent<CommentSectionProps> = ({
     Error
   >(client, { articleId: articleId });
 
+  const comments = data?.comments  as Array<CommentType>;
+
   const createComment = useCreateCommentMutation<CreateCommentMutation, Error>(
     client,
     {
-      onSuccess: () => {
-
-      },
+      onSuccess: () => {},
     }
   );
 
@@ -78,23 +78,21 @@ const CommentSection: React.FunctionComponent<CommentSectionProps> = ({
       )}
 
       {isDefined(error) ? (
-        <div>
-          ERROR
-          <br />
-          {error?.message}
-        </div>
+        <CommentMetaData>
+          <ErrorScreen error={error} />
+        </CommentMetaData>
       ) : isLoading ? (
         <LoadingIndicator />
       ) : (
-        data?.comments?.map((comment) => {
+        comments.map((comment) => {
           return (
             <CommentWrapper>
-              <Comment>{comment?.text}</Comment>
+              <Comment>{comment.text}</Comment>
               <CommentMetaData>
-                <UserName>User: {comment?.authorName}</UserName>
+                <UserName>User: {comment.authorName}</UserName>
                 <Date>
                   Created at:{" "}
-                  {getDateWithoutTimeStamp(getDate(comment?.createdDate!))}
+                  {getDate(comment.createdDate).toUTCString()}
                 </Date>
               </CommentMetaData>
             </CommentWrapper>
