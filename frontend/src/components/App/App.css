@@ -9,6 +9,7 @@ html {
   min-height: 100%;
   color: white;
   background-color: #22262C;
+  font-size: 100%;
 }
 
 a:visited {

@@ -9,10 +9,13 @@ import Upload from "../../pages/Upload";
 import Article from "../../pages/Article";
 import { GraphQLClient } from "graphql-request";
 import About from "../../pages/About";
+import Styles from "../../pages/Styles";
 
 const graphqlClient = new GraphQLClient("http://localhost:4000/graphql");
 
 function App() {
+  document.title = "Cool Blog";
+
   return (
     <Router>
       <header>
@@ -23,11 +26,21 @@ function App() {
       </header>
       <body>
         <Routes>
-          <Route path="/" element={<Overview client={graphqlClient}/>}></Route>
-          <Route path="/overview" element={<Overview client={graphqlClient}/>}></Route>
-          <Route path="/upload" element={<Upload client={graphqlClient}/>}></Route>
-          <Route path="/article/:id" element={<Article client={graphqlClient}/>}></Route>
+          <Route path="/" element={<Overview client={graphqlClient} />}></Route>
+          <Route
+            path="/overview"
+            element={<Overview client={graphqlClient} />}
+          ></Route>
+          <Route
+            path="/upload"
+            element={<Upload client={graphqlClient} />}
+          ></Route>
+          <Route
+            path="/article/:id"
+            element={<Article client={graphqlClient} />}
+          ></Route>
           <Route path="/about" element={<About />}></Route>
+          <Route path="/styles" element={<Styles client={graphqlClient} />} />
         </Routes>
         <Footer links={FooterLinks} />
       </body>
@@ -37,6 +50,9 @@ function App() {
 
 export default App;
 
-const NavBarLinks: Links = [["/overview", "Overview"]];
+const NavBarLinks: Links = [
+  ["/overview", "Overview"],
+  ["/styles", "Practise Styles"],
+];
 
 const FooterLinks: Links = [["/about", "About"]];
