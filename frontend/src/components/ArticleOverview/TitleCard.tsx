@@ -30,8 +30,7 @@ const SWrapper = styled.div`
   margin: 20px;
   width: 100%;
 
-  border-color: ${colors.primary.BLUE_5};
-  border-radius: ${BORDER_RADIUS};
+  border-color: ${colors.primary.GRAY_3};
 
   background-size: 300% 300%;
   background-image: linear-gradient(

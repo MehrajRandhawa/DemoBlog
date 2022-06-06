@@ -54,8 +54,8 @@ const SWrapper = styled.div`
   justify-content: space-between;
   background-color: ${colors.primary.BLUE_4};
   border: solid;
-  border-color: ${colors.primary.BLUE_5};
-  border-radius: ${BORDER_RADIUS};
+  border-color: ${colors.primary.GRAY_3};
+  color: white;
   margin: 5px;
   transition: transform 0.2s;
 

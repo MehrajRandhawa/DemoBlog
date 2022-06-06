@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { NonEmptyArray, NonEmptyTuple } from "../../utils/types/types";
 import { isDefined } from "../../utils/utils";
 import AuthenticationMenu from "../AuthenticationMenu/AuthenticationMenu";
+import { DarkmodeToggle } from "./DarkmodeToggle";
 
 type LinkPath = string;
 type LinkDescription = string;
@@ -39,6 +40,7 @@ const NavBar: React.FunctionComponent<NavBarProps> = ({
       <AuthenticationMenuContainer>
         <AuthenticationMenu/>
       </AuthenticationMenuContainer>
+      <DarkmodeToggle/>
     </NavBarContainer>
   );
 };
@@ -47,7 +49,6 @@ const NavBarContainer = styled.nav`
   display: inline-flex;
   justify-content: space-between;
   width: 100%;
-  color: white;
   padding-left: 10%;
   padding-right: 5%;
 `;

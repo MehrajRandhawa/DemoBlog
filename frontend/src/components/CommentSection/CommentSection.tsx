@@ -109,6 +109,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  color: white;
 `;
 
 const CommentInput = styled.div`
@@ -134,7 +135,7 @@ const CommentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border: solid;
-  border-radius: ${BORDER_RADIUS};
+  /* border-radius: ${BORDER_RADIUS}; */
   border-color: ${colors.primary.BLUE_5};
   background-color: ${colors.primary.BLUE_4};
   padding: 10px;

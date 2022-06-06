@@ -35,10 +35,10 @@ const Wrapper = styled.div`
   height: 30px;
   position: sticky;
   bottom: 0;
-  background-color: ${colors.primary.GRAY_3};
+  /* background-color: ${colors.primary.GRAY_3}; */
   justify-content: space-between;
   width: 100%;
-  color: white;
+
   padding-left: 10%;
   padding-right: 5%;
 `;
