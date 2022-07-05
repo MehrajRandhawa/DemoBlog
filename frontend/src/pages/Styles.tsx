@@ -2,6 +2,8 @@ import styled from "styled-components";
 import {
   ChargingBattery,
   Eclipse,
+  FollowingEye,
+  FollowMouse,
   LoadingIndicator,
   PractiseCanvas,
   ScrollDown,
@@ -30,6 +32,12 @@ const Styles: React.FunctionComponent<PageProps> = ({ client }) => {
       </PractiseCanvas>
       <PractiseCanvas title="Content Card">
         <ContentCard />
+      </PractiseCanvas>
+      <PractiseCanvas title="Follow Mouse">
+        <FollowMouse />
+      </PractiseCanvas>
+      <PractiseCanvas title="Following Eye">
+        <FollowingEye />
       </PractiseCanvas>
     </Wrapper>
   );
